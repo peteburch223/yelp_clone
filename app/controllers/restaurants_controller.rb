@@ -8,6 +8,11 @@ class RestaurantsController < ApplicationController
     @restaurants = Restaurant.all
   end
 
+  def show
+    @restaurant = Restaurant.find(params[:id])
+    p params
+  end
+
   def create
     Restaurant.create(restaurant_params)
     redirect_to '/restaurants'
