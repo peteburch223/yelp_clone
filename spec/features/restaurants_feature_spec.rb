@@ -60,9 +60,7 @@ feature 'restaurants' do
   end
   context 'an invalid restaurant' do
     it 'does not let you submit a name that is too short' do
-      visit '/restaurants'
-      click_link 'Add a restaurant'
-      fill_in 'Name', with: 'kf'
+      create_restaurant(name: 'kf')
       click_button 'Create Restaurant'
       expect(page).not_to have_css 'h2', text: 'kf'
       expect(page).to have_content 'error'
@@ -70,24 +68,17 @@ feature 'restaurants' do
   end
   context 'creating restaurants' do
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
-      visit '/restaurants'
-      click_link 'Add a restaurant'
-      fill_in 'Name', with: 'KFC'
+      create_restaurant
       click_button 'Create Restaurant'
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
     end
 
-    scenario 'Adds an image and shows it on the website' do
-      visit '/restaurants'
-      click_link 'Add a restaurant'
-      fill_in 'Name', with: 'KFC'
+    scenario 'Adds an image and shows it on the website', focus: false do
+      create_restaurant
       attach_file 'restaurant[image]', Rails.root + 'spec/support/uploads/image-slider-4.jpg'
       click_button 'Create Restaurant'
-      expect(page).to have_content 'KFC'
-      expect(current_path).to eq '/restaurants'
-      puts page.html
-      expect(page).should have_xpath("//img[contains(@src,'image-slider-4.jpg')]")
+      expect(page).to have_xpath("//img[contains(@src,'image-slider-4.jpg')]")
     end
   end
 end

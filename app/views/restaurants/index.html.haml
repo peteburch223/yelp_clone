@@ -11,6 +11,8 @@
       = restaurant.name
 
     - if restaurant.reviews.any?
+      %h3 Average rating: #{restaurant.reviews.average(:rating)}
+
       %ul
         - restaurant.reviews.each do |review|
           %li

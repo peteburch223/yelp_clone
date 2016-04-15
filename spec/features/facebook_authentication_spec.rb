@@ -1,5 +1,5 @@
 require 'rails_helper'
-require_relative 'facebook_helper'
+# require_relative 'helpers/facebook_helper'
 
 feature 'facebook authentication', js: false do
   scenario 'log in with valid facebook account succeeds' do

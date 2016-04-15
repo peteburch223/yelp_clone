@@ -2,11 +2,14 @@ require 'factory_girl'
 require 'support/factory_girl'
 require 'helpers/user_helper'
 require 'helpers/review_helper'
+require 'helpers/restaurant_helper'
+require 'helpers/facebook_helper'
 
 RSpec.configure do |config|
 
   config.include UserHelpers
   config.include ReviewHelpers
+  config.include RestaurantHelpers
 
   config.before(:suite) do
      DatabaseCleaner.clean_with(:truncation)
