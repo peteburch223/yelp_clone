@@ -77,5 +77,17 @@ feature 'restaurants' do
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
     end
+
+    scenario 'Adds an image and shows it on the website' do
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      attach_file 'restaurant[image]', Rails.root + 'spec/support/uploads/image-slider-4.jpg'
+      click_button 'Create Restaurant'
+      expect(page).to have_content 'KFC'
+      expect(current_path).to eq '/restaurants'
+      puts page.html
+      expect(page).should have_xpath("//img[contains(@src,'image-slider-4.jpg')]")
+    end
   end
 end
