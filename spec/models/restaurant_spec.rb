@@ -3,9 +3,12 @@ require 'rails_helper'
 describe Restaurant, type: :model do
 
   let(:user) { create(:user) }
-  subject(:restaurant) { build(:restaurant) }
+  let(:user2) { create(:user) }
+  subject(:restaurant) { described_class.new(name: "KFC") }
+  let(:restaurant1) { build(:restaurant) }
   let(:restaurant2) { build(:restaurant) }
   let(:review) { build(:review) }
+  let(:review2) { build(:review) }
   let(:review_params) { { thoughts: review.thoughts, rating: review.rating } }
 
 
@@ -20,7 +23,7 @@ describe Restaurant, type: :model do
   end
 
   it 'is not valid unless it has a unique name' do
-    link_restaurant_and_user(user, restaurant)
+    link_restaurant_and_user(user, restaurant1)
     link_restaurant_and_user(user, restaurant2)
     expect(restaurant2).to have(1).error_on(:name)
     expect(restaurant2).not_to be_valid
@@ -34,5 +37,16 @@ describe Restaurant, type: :model do
       restaurant.build_review(review_params, user)
       expect(restaurant.build_review(review_params, user)).to eq(false)
     end
+  end
+
+  context '#average_rating' do
+    it 'calculates the average of multiple reviews' do
+      link_restaurant_and_user(user, restaurant)
+      link_review_with_restaurant_and_user(review, restaurant, user)
+      link_review_with_restaurant_and_user(review2, restaurant, user2)
+      average = ((review.rating.to_f + review2.rating.to_f) / 2).to_i
+      expect(restaurant.average_rating).to eq average
+    end
+
   end
 end
