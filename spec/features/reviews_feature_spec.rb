@@ -22,6 +22,7 @@ feature 'reviewing' do
     click_link 'Sign out'
     user_sign_in(user2)
     review(restaurant: restaurant, thoughts: 'rubbish', rating: 1)
-    expect(page).to have_content("Average rating: 2")
+    # expect(page).to have_content("Average rating: 2")
+    expect(page).to have_content('Average rating: ★★☆☆☆')
   end
 end

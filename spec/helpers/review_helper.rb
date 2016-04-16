@@ -14,8 +14,6 @@ module ReviewHelpers
              rating: RATING)
     visit '/restaurants'
     click_link "Review #{restaurant.name}"
-    # puts "Reviewing on page #{page.current_path}"
-    # puts page.html
     fill_in "Thoughts", with: thoughts
     select rating, from: 'Rating'
     click_button 'Leave Review'
