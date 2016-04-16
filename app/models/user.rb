@@ -3,9 +3,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
 
+  has_many :restaurants
   has_many :reviews
   has_many :reviewed_restaurants, through: :reviews, source: :restaurant
-  has_many :restaurants
+
+  has_many :endorsements
+  has_many :endorsed_reviews, through: :endorsements, source: :review
+
 
   def self.from_omniauth(auth)
     where(uid: auth.uid, provider: auth.provider).first_or_create do |user|
@@ -26,4 +30,7 @@ class User < ActiveRecord::Base
    reviews.include? review
   end
 
+  def endorser_of?(review)
+    endorsed_reviews.include? review
+  end
 end

@@ -4,6 +4,7 @@ require 'helpers/user_helper'
 require 'helpers/review_helper'
 require 'helpers/restaurant_helper'
 require 'helpers/facebook_helper'
+require 'helpers/endorsement_helper'
 
 RSpec.configure do |config|
 
