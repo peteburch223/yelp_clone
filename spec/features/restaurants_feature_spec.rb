@@ -80,5 +80,11 @@ feature 'restaurants' do
       click_button 'Create Restaurant'
       expect(page).to have_xpath("//img[contains(@src,'image-slider-4.jpg')]")
     end
+
+    scenario 'does not display an image if none uploaded', focus: false do
+      create_restaurant
+      click_button 'Create Restaurant'
+      expect(page).not_to have_xpath("//img")
+    end
   end
 end

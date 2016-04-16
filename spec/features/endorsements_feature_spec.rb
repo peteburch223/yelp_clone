@@ -17,6 +17,8 @@ feature 'endorsing reviews', focus: true  do
     visit '/restaurants'
     click_link 'Endorse Review'
     expect(page).to have_content('1 endorsement')
+    expect(page).not_to have_content("Cannot re-endorse review")
+
   end
 
   scenario 'error message displayed if user attempts to endorse review multiple times' do
