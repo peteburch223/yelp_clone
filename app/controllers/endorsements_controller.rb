@@ -11,7 +11,7 @@ class EndorsementsController < ApplicationController
       redirect_to restaurants_path
       return
     end
-    @endorsement.create(user: current_user, review: review)
+    Endorsement.create(user: current_user, review: review)
     redirect_to restaurants_path
   end
 end
