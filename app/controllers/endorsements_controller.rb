@@ -5,7 +5,8 @@ class EndorsementsController < ApplicationController
   def create
     review = Review.find(params[:review_id])
     flash[:alert] = review.endorse_by(current_user)
-    redirect_to restaurants_path
+    render json: {new_endorsement_count: review.endorsements.count}
+    # redirect_to restaurants_path
   end
-  
+
 end

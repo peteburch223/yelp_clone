@@ -12,15 +12,14 @@
       = restaurant.name
 
     - if restaurant.reviews.any?
-      Average rating:
-      = star_rating(restaurant.average_rating)
-
       %ul
         - restaurant.reviews.each do |review|
-          = link_to "Endorse Review", review_endorsements_path(review), method: :post
-          %p= pluralize review.endorsements.count, 'endorsement'
           %li
-            = review.thoughts
+            #{review.thoughts} Average rating: #{star_rating(restaurant.average_rating)}
+            = link_to "Endorse", review_endorsements_path(review), class: 'endorsements-link'
+            %span.endorsements_count= review.endorsements.count
+            = 'endorsement'.pluralize review.endorsements.count
+
             %strong= review.rating
             \/5
     - else

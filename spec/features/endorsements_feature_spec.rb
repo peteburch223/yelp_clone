@@ -13,27 +13,35 @@ feature 'endorsing reviews', focus: true  do
     user_sign_in(user1)
   end
 
-  scenario 'A user can endorse a review, which increments the restaurant endorsement count' do
-    visit '/restaurants'
-    click_link 'Endorse Review'
-    expect(page).to have_content('1 endorsement')
-    expect(page).not_to have_content("Cannot re-endorse review")
+  xscenario 'using back-end to update endorsements' do
 
+    scenario 'A user can endorse a review, which increments the restaurant endorsement count' do
+      visit '/restaurants'
+      click_link 'Endorse Review'
+      expect(page).to have_content('1 endorsement')
+      expect(page).not_to have_content("Cannot re-endorse review")
+    end
+
+    scenario 'error message displayed if user attempts to endorse review multiple times' do
+      visit '/restaurants'
+      click_link 'Endorse Review'
+      click_link 'Endorse Review'
+      expect(page).to have_content("Cannot re-endorse review")
+    end
+
+    scenario 'restaurants page displays multiple endorsements' do
+      visit '/restaurants'
+      click_link 'Endorse Review'
+      click_link 'Sign out'
+      user_sign_in(user2)
+      click_link 'Endorse Review'
+      expect(page).to have_content('2 endorsements')
+    end
   end
 
-  scenario 'error message displayed if user attempts to endorse review multiple times' do
+  it 'a user can endorse a review, which increments the endorsement count', js: true do
     visit '/restaurants'
-    click_link 'Endorse Review'
-    click_link 'Endorse Review'
-    expect(page).to have_content("Cannot re-endorse review")
-  end
-
-  scenario 'restaurants page displays multiple endorsements' do
-    visit '/restaurants'
-    click_link 'Endorse Review'
-    click_link 'Sign out'
-    user_sign_in(user2)
-    click_link 'Endorse Review'
-    expect(page).to have_content('2 endorsements')
+    click_link 'Endorse'
+    expect(page).to have_content("1 endorsement")
   end
 end

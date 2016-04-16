@@ -58,8 +58,8 @@ group :test do
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
   gem 'capybara'
+  gem 'poltergeist'
   gem 'shoulda'
-  gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
 end
